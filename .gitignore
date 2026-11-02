@@ -1,0 +1,26 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables and secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Test and coverage output
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Editor and operating system files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local AI/editor configuration
+.qodo/

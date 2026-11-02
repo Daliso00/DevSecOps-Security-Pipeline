@@ -1,0 +1,107 @@
+2026-10-31T06:42:29+02:00       INFO    [vuln] Vulnerability scanning is enabled
+2026-10-31T06:42:29+02:00       INFO    [misconfig] Misconfiguration scanning is enabled
+2026-10-31T06:42:29+02:00       INFO    [checks-client] Using existing checks from cache        path="C:\\Users\\dalis\\AppData\\Local\\trivy\\policy\\content"
+2026-10-31T06:42:30+02:00       INFO    [secret] Secret scanning is enabled
+2026-10-31T06:42:30+02:00       INFO    [secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-10-31T06:42:30+02:00       INFO    [secret] Please see https://trivy.dev/docs/v0.75/guide/scanner/secret#recommendation for faster secret detection
+2026-10-31T06:42:30+02:00       INFO    [terraform scanner] Scanning root module        file_path="terraform"
+2026-10-31T06:42:30+02:00       WARN    [pip] Unable to find python `site-packages` directory. License detection is skipped.    err="site-packages directory not found"
+2026-10-31T06:42:30+02:00       INFO    Number of language-specific files       num=1
+2026-10-31T06:42:30+02:00       INFO    [pip] Detecting vulnerabilities...
+2026-10-31T06:42:30+02:00       INFO    Detected config files   num=2
+
+Report Summary
+
+┌───────────────────────┬───────────┬─────────────────┬───────────────────┬─────────┐
+│        Target         │   Type    │ Vulnerabilities │ Misconfigurations │ Secrets │
+├───────────────────────┼───────────┼─────────────────┼───────────────────┼─────────┤
+│ requirements.txt      │    pip    │        0        │         -         │    -    │
+├───────────────────────┼───────────┼─────────────────┼───────────────────┼─────────┤
+│ terraform             │ terraform │        -        │         0         │    -    │
+├───────────────────────┼───────────┼─────────────────┼───────────────────┼─────────┤
+│ terraform/insecure.tf │ terraform │        -        │         5         │    -    │
+└───────────────────────┴───────────┴─────────────────┴───────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+terraform/insecure.tf (terraform)
+=================================
+Tests: 5 (SUCCESSES: 0, FAILURES: 5)
+Failures: 5 (HIGH: 5, CRITICAL: 0)
+
+AWS-0086 (HIGH): No public access block so not blocking public acls
+════════════════════════════════════════
+S3 buckets should block public ACLs on buckets and any objects they contain. By blocking, PUTs with fail if the object has any public ACL a.
+
+
+See https://avd.aquasec.com/misconfig/aws-0086
+────────────────────────────────────────
+ terraform/insecure.tf:1-3
+────────────────────────────────────────
+   1 ┌ resource "aws_s3_bucket" "test_bucket" {
+   2 │   bucket = "portfolio-insecure-test-bucket"
+   3 └ }
+────────────────────────────────────────
+
+
+AWS-0087 (HIGH): No public access block so not blocking public policies
+════════════════════════════════════════
+S3 bucket policy should have block public policy to prevent users from putting a policy that enable public access.
+
+
+See https://avd.aquasec.com/misconfig/aws-0087
+────────────────────────────────────────
+ terraform/insecure.tf:1-3
+────────────────────────────────────────
+   1 ┌ resource "aws_s3_bucket" "test_bucket" {
+   2 │   bucket = "portfolio-insecure-test-bucket"
+   3 └ }
+────────────────────────────────────────
+
+
+AWS-0091 (HIGH): No public access block so not blocking public acls
+════════════════════════════════════════
+S3 buckets should ignore public ACLs on buckets and any objects they contain. By ignoring rather than blocking, PUT calls with public ACLs will still be applied but the ACL will be ignored.
+
+
+See https://avd.aquasec.com/misconfig/aws-0091
+────────────────────────────────────────
+ terraform/insecure.tf:1-3
+────────────────────────────────────────
+   1 ┌ resource "aws_s3_bucket" "test_bucket" {
+   2 │   bucket = "portfolio-insecure-test-bucket"
+   3 └ }
+────────────────────────────────────────
+
+
+AWS-0093 (HIGH): No public access block so not restricting public buckets
+════════════════════════════════════════
+S3 buckets should restrict public policies for the bucket. By enabling, the restrict_public_buckets, only the bucket owner and AWS Services can access if it has a public policy.
+
+
+See https://avd.aquasec.com/misconfig/aws-0093
+────────────────────────────────────────
+ terraform/insecure.tf:1-3
+────────────────────────────────────────
+   1 ┌ resource "aws_s3_bucket" "test_bucket" {
+   2 │   bucket = "portfolio-insecure-test-bucket"
+   3 └ }
+────────────────────────────────────────
+
+
+AWS-0132 (HIGH): Bucket does not encrypt data with a customer managed key.
+════════════════════════════════════════
+Encryption using AWS keys provides protection for your S3 buckets. To gain greater control over encryption, such as key rotation, access policies, and auditability, use customer managed keys (CMKs) with SSE-KMS.
+Note that SSE-KMS is not supported for S3 server access logging destination buckets; in such cases, use SSE-S3 instead.
+
+
+See https://avd.aquasec.com/misconfig/aws-0132
+────────────────────────────────────────
+ terraform/insecure.tf:1-3
+────────────────────────────────────────
+   1 ┌ resource "aws_s3_bucket" "test_bucket" {
+   2 │   bucket = "portfolio-insecure-test-bucket"
+   3 └ }
+────────────────────────────────────────

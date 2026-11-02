@@ -1,0 +1,48 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.75.0"
+  },
+  "ReportID": "01a196b7-2392-75ca-ad4e-8de879123022",
+  "CreatedAt": "2026-11-01T12:45:47.0263796+02:00",
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "Results": [
+    {
+      "Target": "requirements.txt",
+      "Class": "lang-pkgs",
+      "Type": "pip",
+      "Packages": [
+        {
+          "Name": "requests",
+          "Identifier": {
+            "PURL": "pkg:pypi/requests@2.32.4",
+            "UID": "60e0faea8f004d55"
+          },
+          "Version": "2.32.4",
+          "Locations": [
+            {
+              "StartLine": 2,
+              "EndLine": 2
+            }
+          ],
+          "AnalyzedBy": "pip"
+        }
+      ]
+    },
+    {
+      "Target": "terraform",
+      "Class": "config",
+      "Type": "terraform",
+      "MisconfSummary": {
+        "Successes": 24,
+        "Failures": 0
+      }
+    },
+    {
+      "Target": "terraform/insecure.tf",
+      "Class": "config",
+      "Type": "terraform"
+    }
+  ]
+}
